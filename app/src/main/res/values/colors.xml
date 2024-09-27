@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+// NUEVOS COLORES PORQUE ME APETECEN
+    <color name="primaryColor">#3F51B5</color>
+    <color name="secondaryColor">#FF4081</color>
+    <color name="primaryColorDark">#303F9F</color>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="primaryTextColor">#212121</color>
 </resources>
