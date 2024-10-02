@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -28,8 +29,14 @@ import java.util.UUID;
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
 
+
+
 public class MainActivity extends AppCompatActivity {
 
+
+
+    private TextView valorCo2TextView;
+    private TextView valorTemperaturaTextView;
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static final String ETIQUETA_LOG = ">>>>";
@@ -87,6 +94,16 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = resultado.getScanRecord().getBytes();
         int rssi = resultado.getRssi();
 
+        TramaIBeacon tib = new TramaIBeacon(bytes);
+
+        int tipoSensor = Utilidades.bytesToInt(tib.getMinor()); // Cambia esto si 'minor' no es el valor que necesitas
+        int valorSensor = Utilidades.bytesToInt(tib.getMajor()); // Cambia esto si 'major' no es el valor que necesitas
+
+        actualizarValores(tipoSensor, valorSensor);
+
+
+
+        Log.d(ETIQUETA_LOG, "Valores actualizados: tipoSensor=" + tipoSensor + ", valorSensor=" + valorSensor);
         Log.d(ETIQUETA_LOG, " ****************************************************");
         Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
@@ -106,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
         Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
 
-        TramaIBeacon tib = new TramaIBeacon(bytes);
 
         Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
         Log.d(ETIQUETA_LOG, " prefijo  = " + Utilidades.bytesToHexString(tib.getPrefijo()));
@@ -251,6 +267,22 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): voy a perdir permisos (si no los tuviera) !!!!");
 
+
+
+        // Verificación de permisos de ubicación
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    CODIGO_PETICION_PERMISOS
+            );
+        } else {
+            Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo permisos de ubicación necesarios !!!!");
+        }
+
+
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Para Android 12 y versiones posteriores, pedimos permisos de "dispositivos cercanos"
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED
@@ -280,6 +312,20 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
 
+    private void actualizarValores(int tipoSensor, int valor) {
+        switch (tipoSensor) {
+            case 11: // CO2
+                valorCo2TextView.setText(String.valueOf(valor));
+                break;
+            case 12: // Temperatura
+                valorTemperaturaTextView.setText(String.valueOf(valor));
+                break;
+            default:
+                Log.d(ETIQUETA_LOG, "Tipo de sensor desconocido: " + tipoSensor);
+        }
+    }
+
+
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     @Override
@@ -288,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
+
+        valorCo2TextView = findViewById(R.id.valorco2);
+        valorTemperaturaTextView = findViewById(R.id.valortemperatura);
 
         inicializarBlueTooth();
 
