@@ -10,7 +10,9 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.util.Log;
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    private void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
+    private void buscarEsteDispositivoBTLE(final UUID dispositivoBuscado) {
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
 
         Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
@@ -137,11 +139,30 @@ public class MainActivity extends AppCompatActivity {
 
         this.callbackDelEscaneo = new ScanCallback() {
             @Override
-            public void onScanResult( int callbackType, ScanResult resultado ) {
+            public void onScanResult(int callbackType, ScanResult resultado) {
                 super.onScanResult(callbackType, resultado);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
+                Log.d(ETIQUETA_LOG, "buscarEsteDispositivoBTLE(): onScanResult()");
 
-                mostrarInformacionDispositivoBTLE( resultado );
+                // Obtén el dispositivo desde el resultado
+                BluetoothDevice dispositivo = resultado.getDevice();
+                byte[] bytes = resultado.getScanRecord().getBytes();
+
+                // Crear objeto TramaIBeacon para extraer el UUID
+                TramaIBeacon tib = new TramaIBeacon(bytes);
+                UUID uuid = Utilidades.stringToUUID(Utilidades.bytesToString(tib.getUUID()));
+
+                // Comprueba si el UUID coincide con el que buscas
+                if (uuid.equals(dispositivoBuscado)) {
+                    Log.d(ETIQUETA_LOG, "Dispositivo encontrado: " + uuid);
+                    mostrarInformacionDispositivoBTLE(resultado);
+
+                    // Extraer el valor minor y actualizar el TextView
+                    byte[] minorBytes = tib.getMinor(); // Asumiendo que esto devuelve un byte[]
+                    int minorValue = Utilidades.bytesToInt(minorBytes);
+                    final String minorText = "Minor: " + minorValue;
+                }else{
+                    Log.d(ETIQUETA_LOG, "Dispositivo no objetivo encontrado: " + uuid);
+                }
             }
 
             @Override
@@ -159,13 +180,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        ScanFilter sf = new ScanFilter.Builder().setDeviceName( dispositivoBuscado ).build();
+        // Utilizaciones de escaneo
+        ScanSettings scanSettings = new ScanSettings.Builder()
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                .build();
 
         Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado );
-        //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado
-          //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
 
-        this.elEscanner.startScan( this.callbackDelEscaneo );
+        this.elEscanner.startScan(null, scanSettings, this.callbackDelEscaneo);
     } // ()
 
     // --------------------------------------------------------------
@@ -191,13 +213,10 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     public void botonBuscarNuestroDispositivoBTLEPulsado( View v ) {
-        Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado" );
-        //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
-
-        //this.buscarEsteDispositivoBTLE( "EPSG-GTI-PROY-3A" );
-        this.buscarEsteDispositivoBTLE( "fistro" );
-
-    } // ()
+        Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado");
+        this.buscarEsteDispositivoBTLE(Utilidades.stringToUUID("BUBUBIBI"));
+    }
+    // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -232,20 +251,31 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): voy a perdir permisos (si no los tuviera) !!!!");
 
-        if (
-                ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        )
-        {
-            ActivityCompat.requestPermissions(
-                    MainActivity.this,
-                    new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION},
-                    CODIGO_PETICION_PERMISOS);
-        }
-        else {
-            Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios !!!!");
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Para Android 12 y versiones posteriores, pedimos permisos de "dispositivos cercanos"
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT},
+                        CODIGO_PETICION_PERMISOS
+                );
+            } else {
+                Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios en Android 12+ !!!!");
+            }
+        } else {
+            // Para Android 11 y versiones anteriores, pedimos los permisos de Bluetooth y localización antiguos
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION},
+                        CODIGO_PETICION_PERMISOS
+                );
+            } else {
+                Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios !!!!");
+            }
         }
     } // ()
 

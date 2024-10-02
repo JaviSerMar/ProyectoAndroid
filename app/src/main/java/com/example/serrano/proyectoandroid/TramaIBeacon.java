@@ -21,6 +21,8 @@ public class TramaIBeacon {
     private byte iBeaconType = 0 ; // 1 byte
     private byte iBeaconLength = 0 ; // 1 byte
 
+    private boolean noadvFlags;
+
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
     public byte[] getPrefijo() {
@@ -92,6 +94,26 @@ public class TramaIBeacon {
     public TramaIBeacon(byte[] bytes ) {
         this.losBytes = bytes;
 
+
+        if( losBytes[0] == 02 && losBytes[1] == 01 && losBytes[2] == 06){
+            noadvFlags = false;
+        }else{
+            noadvFlags = true;
+        }
+
+        if(noadvFlags){
+        prefijo = Arrays.copyOfRange(losBytes, 0, 5+1 ); // 6 bytes
+        uuid = Arrays.copyOfRange(losBytes, 6, 21+1 ); // 16 bytes
+        major = Arrays.copyOfRange(losBytes, 22, 23+1 ); // 2 bytes
+        minor = Arrays.copyOfRange(losBytes, 24, 25+1 ); // 2 bytes
+        txPower = losBytes[ 26 ]; // 1 byte
+
+        advHeader = Arrays.copyOfRange( prefijo, 0, 1+1 ); // 2 bytes
+        companyID = Arrays.copyOfRange( prefijo, 2, 3+1 ); // 2 bytes
+        iBeaconType = prefijo[ 4 ]; // 1 byte
+        iBeaconLength = prefijo[ 5 ]; // 1 byte
+
+        }else{
         prefijo = Arrays.copyOfRange(losBytes, 0, 8+1 ); // 9 bytes
         uuid = Arrays.copyOfRange(losBytes, 9, 24+1 ); // 16 bytes
         major = Arrays.copyOfRange(losBytes, 25, 26+1 ); // 2 bytes
@@ -104,8 +126,10 @@ public class TramaIBeacon {
         iBeaconType = prefijo[ 7 ]; // 1 byte
         iBeaconLength = prefijo[ 8 ]; // 1 byte
 
-    } // ()
-} // class
+        } // ()
+    }
+}
+
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
