@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,11 +33,16 @@ import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
-
     private TextView valorCo2TextView;
     private TextView valorTemperaturaTextView;
+
+    private String nuevoUuid;
+
+
+    private static final int SENSOR_CO2 = 11;
+    private static final int SENSOR_TEMPERATURA = 12;
+
+
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private static final String ETIQUETA_LOG = ">>>>";
@@ -58,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         this.callbackDelEscaneo = new ScanCallback() {
             @Override
-            public void onScanResult( int callbackType, ScanResult resultado ) {
+            public void onScanResult(int callbackType, ScanResult resultado) {
                 super.onScanResult(callbackType, resultado);
                 Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): onScanResult() ");
 
-                mostrarInformacionDispositivoBTLE( resultado );
+                mostrarInformacionDispositivoBTLE(resultado);
             }
 
             @Override
@@ -82,17 +88,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empezamos a escanear ");
 
-        this.elEscanner.startScan( this.callbackDelEscaneo);
+        this.elEscanner.startScan(this.callbackDelEscaneo);
 
     } // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    private void mostrarInformacionDispositivoBTLE( ScanResult resultado ) {
+    private void mostrarInformacionDispositivoBTLE(ScanResult resultado) {
 
         BluetoothDevice bluetoothDevice = resultado.getDevice();
         byte[] bytes = resultado.getScanRecord().getBytes();
         int rssi = resultado.getRssi();
+
 
         TramaIBeacon tib = new TramaIBeacon(bytes);
 
@@ -100,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         int valorSensor = Utilidades.bytesToInt(tib.getMajor()); // Cambia esto si 'major' no es el valor que necesitas
 
         actualizarValores(tipoSensor, valorSensor);
-
 
 
         Log.d(ETIQUETA_LOG, "Valores actualizados: tipoSensor=" + tipoSensor + ", valorSensor=" + valorSensor);
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
-        Log.d(ETIQUETA_LOG, " rssi = " + rssi );
+        Log.d(ETIQUETA_LOG, " rssi = " + rssi);
 
         Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
         Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
@@ -174,9 +180,12 @@ public class MainActivity extends AppCompatActivity {
 
                     // Extraer el valor minor y actualizar el TextView
                     byte[] minorBytes = tib.getMinor(); // Asumiendo que esto devuelve un byte[]
+                    byte[] majorBytes = tib.getMajor();
                     int minorValue = Utilidades.bytesToInt(minorBytes);
+                    int majorValue = Utilidades.bytesToInt(majorBytes);
                     final String minorText = "Minor: " + minorValue;
-                }else{
+                    actualizarValores(procesarBeacon(majorValue,minorValue),minorValue);
+                } else {
                     Log.d(ETIQUETA_LOG, "Dispositivo no objetivo encontrado: " + uuid);
                 }
             }
@@ -201,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .build();
 
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado );
+        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado);
 
         this.elEscanner.startScan(null, scanSettings, this.callbackDelEscaneo);
     } // ()
@@ -210,64 +219,68 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     private void detenerBusquedaDispositivosBTLE() {
 
-        if ( this.callbackDelEscaneo == null ) {
+        if (this.callbackDelEscaneo == null) {
             return;
         }
 
-        this.elEscanner.stopScan( this.callbackDelEscaneo );
+        this.elEscanner.stopScan(this.callbackDelEscaneo);
         this.callbackDelEscaneo = null;
 
     } // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    public void botonBuscarDispositivosBTLEPulsado( View v ) {
-        Log.d(ETIQUETA_LOG, " boton buscar dispositivos BTLE Pulsado" );
+    public void botonBuscarDispositivosBTLEPulsado(View v) {
+        Log.d(ETIQUETA_LOG, " boton buscar dispositivos BTLE Pulsado");
         this.buscarTodosLosDispositivosBTLE();
     } // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    public void botonBuscarNuestroDispositivoBTLEPulsado( View v ) {
+    public void botonBuscarNuestroDispositivoBTLEPulsado(View v) {
         Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado");
-        this.buscarEsteDispositivoBTLE(Utilidades.stringToUUID("BUBUBIBI"));
+        this.buscarEsteDispositivoBTLE(Utilidades.stringToUUID(nuevoUuid));
     }
     // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    public void botonDetenerBusquedaDispositivosBTLEPulsado( View v ) {
-        Log.d(ETIQUETA_LOG, " boton detener busqueda dispositivos BTLE Pulsado" );
+    public void botonDetenerBusquedaDispositivosBTLEPulsado(View v) {
+        Log.d(ETIQUETA_LOG, " boton detener busqueda dispositivos BTLE Pulsado");
         this.detenerBusquedaDispositivosBTLE();
     } // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private void inicializarBlueTooth() {
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos adaptador BT ");
+        Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): obtenemos adaptador BT");
 
+        // Obtener el adaptador Bluetooth
         BluetoothAdapter bta = BluetoothAdapter.getDefaultAdapter();
 
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitamos adaptador BT ");
-
-        bta.enable();
-
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): habilitado =  " + bta.isEnabled() );
-
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): estado =  " + bta.getState() );
-
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos escaner btle ");
-
-        this.elEscanner = bta.getBluetoothLeScanner();
-
-        if ( this.elEscanner == null ) {
-            Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): Socorro: NO hemos obtenido escaner btle  !!!!");
-
+        // Verificar si el dispositivo soporta Bluetooth
+        if (bta == null) {
+            Log.e(ETIQUETA_LOG, "inicializarBlueTooth(): Error: Este dispositivo no soporta Bluetooth");
+            return; // Salir si no hay soporte de Bluetooth
         }
 
-        Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): voy a perdir permisos (si no los tuviera) !!!!");
+        // Verificar si el Bluetooth está habilitado, de lo contrario habilitarlo
+        if (!bta.isEnabled()) {
+            Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): habilitando adaptador BT");
+            bta.enable();
+        }
 
+        Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): habilitado = " + bta.isEnabled());
+        Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): estado = " + bta.getState());
 
+        Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): obtenemos escáner BTLE");
+        this.elEscanner = bta.getBluetoothLeScanner();
+
+        // Verificar si se obtuvo el escáner correctamente
+        if (this.elEscanner == null) {
+            Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): Socorro: NO hemos obtenido escáner BTLE!!!!");
+            return; // Salir si no se pudo obtener el escáner
+        }
 
         // Verificación de permisos de ubicación
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -277,12 +290,10 @@ public class MainActivity extends AppCompatActivity {
                     CODIGO_PETICION_PERMISOS
             );
         } else {
-            Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo permisos de ubicación necesarios !!!!");
+            Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): parece que YA tengo permisos de ubicación necesarios!!!!");
         }
 
-
-
-
+        // Verificación de permisos según la versión de Android
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Para Android 12 y versiones posteriores, pedimos permisos de "dispositivos cercanos"
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED
@@ -293,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                         CODIGO_PETICION_PERMISOS
                 );
             } else {
-                Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios en Android 12+ !!!!");
+                Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): parece que YA tengo los permisos necesarios en Android 12+!!!!");
             }
         } else {
             // Para Android 11 y versiones anteriores, pedimos los permisos de Bluetooth y localización antiguos
@@ -306,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                         CODIGO_PETICION_PERMISOS
                 );
             } else {
-                Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios !!!!");
+                Log.d(ETIQUETA_LOG, "inicializarBlueTooth(): parece que YA tengo los permisos necesarios!!!!");
             }
         }
     } // ()
@@ -314,10 +325,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void actualizarValores(int tipoSensor, int valor) {
         switch (tipoSensor) {
-            case 11: // CO2
+            case 1: // CO2
                 valorCo2TextView.setText(String.valueOf(valor));
                 break;
-            case 12: // Temperatura
+            case 2: // Temperatura
                 valorTemperaturaTextView.setText(String.valueOf(valor));
                 break;
             default:
@@ -333,10 +344,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
 
         valorCo2TextView = findViewById(R.id.valorco2);
         valorTemperaturaTextView = findViewById(R.id.valortemperatura);
+
+
+        Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
+
+        nuevoUuid = "CHOLOSIMEONEJEFE";
+
 
         inicializarBlueTooth();
 
@@ -348,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
-        super.onRequestPermissionsResult( requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
             case CODIGO_PETICION_PERMISOS:
@@ -359,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(ETIQUETA_LOG, " onRequestPermissionResult(): permisos concedidos  !!!!");
                     // Permission is granted. Continue the action or workflow
                     // in your app.
-                }  else {
+                } else {
 
                     Log.d(ETIQUETA_LOG, " onRequestPermissionResult(): Socorro: permisos NO concedidos  !!!!");
 
@@ -370,7 +386,29 @@ public class MainActivity extends AppCompatActivity {
         // permissions this app might request.
     } // ()
 
-} // class
+
+    public int procesarBeacon(int major, int minor) {
+        int tipoMedicion = major >> 8;  // Obtener el identificador de la medición (CO2 o Temperatura)
+        int contador = major & 0xFF;    // Obtener el contador (opcional si es útil para tu lógica)
+
+        switch (tipoMedicion) {
+            case 11:  // CO2
+                Log.d("Beacon", "Dato de CO2 detectado. Valor: " + minor + ", Contador: " + contador);
+                return 1;
+            case 12:  // Temperatura
+                Log.d("Beacon", "Dato de temperatura detectado. Valor: " + minor + ", Contador: " + contador);
+                return 2;
+            default:
+                Log.d("Beacon", "Tipo de dato no reconocido");
+                break;
+        }
+        return 0;
+    }
+
+}
+
+
+ // class
 // --------------------------------------------------------------
 // --------------------------------------------------------------
 // --------------------------------------------------------------
