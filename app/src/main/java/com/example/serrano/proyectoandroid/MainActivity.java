@@ -24,8 +24,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String nuevoUuid;
 
+    private String tipo;
+
+    ApiService api;
 
     private static final int SENSOR_CO2 = 11;
     private static final int SENSOR_TEMPERATURA = 12;
@@ -61,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
 
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): instalamos scan callback ");
+
+
+
+        List<ScanFilter> scanFilters = new ArrayList<>();
+        ScanSettings scanSettings = new ScanSettings.Builder()
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) // o SCAN_MODE_BALANCED
+                .build();
+
 
         this.callbackDelEscaneo = new ScanCallback() {
             @Override
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empezamos a escanear ");
 
-        this.elEscanner.startScan(this.callbackDelEscaneo);
+        this.elEscanner.startScan(scanFilters, scanSettings, callbackDelEscaneo);
 
     } // ()
 
@@ -153,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
     private void buscarEsteDispositivoBTLE(final UUID dispositivoBuscado) {
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
-
         Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
 
 
@@ -175,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Comprueba si el UUID coincide con el que buscas
                 if (uuid.equals(dispositivoBuscado)) {
-                    Log.d(ETIQUETA_LOG, "Dispositivo encontrado: " + uuid);
+                    Log.d(ETIQUETA_LOG, "Dispositivo encontrado: " + Utilidades.uuidToString(uuid));
                     mostrarInformacionDispositivoBTLE(resultado);
 
                     // Extraer el valor minor y actualizar el TextView
@@ -184,9 +201,45 @@ public class MainActivity extends AppCompatActivity {
                     int minorValue = Utilidades.bytesToInt(minorBytes);
                     int majorValue = Utilidades.bytesToInt(majorBytes);
                     final String minorText = "Minor: " + minorValue;
-                    actualizarValores(procesarBeacon(majorValue,minorValue),minorValue);
+                    actualizarValores(cargarBeacon(majorValue,minorValue),minorValue);
+
+
+                    ApiService apiService = ApiClient.getApiService();
+
+
+                    if (cargarBeacon(majorValue, minorValue) == 1) {
+                        tipo = "CO2";
+                    } else if (cargarBeacon(majorValue, minorValue) == 2) {
+                        tipo = "temperature";
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    String timestamp = sdf.format(new Date());
+                    SensorData sensorData = new SensorData(tipo, minorValue, timestamp);
+
+                    Call<Void> callback= api.postSensorData(sensorData);
+                    callback.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                // Manejar la lista de datos de sensores aquí
+                                Log.d(ETIQUETA_LOG, "DATO ENVIADO");
+                            } else {
+                                // Manejar el error de la respuesta
+                                Log.d(ETIQUETA_LOG, "SE HA CONECTADO A LA BASE DE DATOS, PERO HA HABIDO UN PROBLEMA INSERTANDO DATOS" + response);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d(ETIQUETA_LOG, "ERROR DE CONEXIÓN: " + t);
+
+                        }
+
+                    });
+
                 } else {
-                    Log.d(ETIQUETA_LOG, "Dispositivo no objetivo encontrado: " + uuid);
+                    Log.d(ETIQUETA_LOG, "Dispositivo no objetivo encontrado: " + Utilidades.uuidToString(uuid));
                 }
             }
 
@@ -351,8 +404,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
 
-        nuevoUuid = "CHOLOSIMEONEJEFE";
+        nuevoUuid = "cholosimeonejefe";
 
+        api = ApiClient.getClient().create(ApiService.class);
 
         inicializarBlueTooth();
 
@@ -387,19 +441,19 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
 
-    public int procesarBeacon(int major, int minor) {
-        int tipoMedicion = major >> 8;  // Obtener el identificador de la medición (CO2 o Temperatura)
-        int contador = major & 0xFF;    // Obtener el contador (opcional si es útil para tu lógica)
+    public int cargarBeacon(int major, int minor) {
+        int tipoMedicion = major >> 8;
+        int contador = major & 0xFF;
 
         switch (tipoMedicion) {
-            case 11:  // CO2
-                Log.d("Beacon", "Dato de CO2 detectado. Valor: " + minor + ", Contador: " + contador);
+            case 11:
+                Log.d("Beacon", "Hay dato de OZONO. Valor: " + minor + ", Tiempo: " + contador);
                 return 1;
-            case 12:  // Temperatura
-                Log.d("Beacon", "Dato de temperatura detectado. Valor: " + minor + ", Contador: " + contador);
+            case 12:
+                Log.d("Beacon", "Hay dato de TEMPERATURA. Valor: " + minor + ", Tiempo: " + contador);
                 return 2;
             default:
-                Log.d("Beacon", "Tipo de dato no reconocido");
+                Log.d("Beacon", "No se detecta el dato");
                 break;
         }
         return 0;
