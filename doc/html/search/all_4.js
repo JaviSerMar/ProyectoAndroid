@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['getadvflags_0',['getAdvFlags',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#aa4450a65ad7624c740bedf30713d45d2',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getadvheader_1',['getAdvHeader',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a526ddf8d1c2c3276872fe297aee901ec',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getapiservice_2',['getApiService',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client.html#a713e683c69c1a3af68f36be72175d5c2',1,'com::example::serrano::proyectoandroid::ApiClient']]],
+  ['getclient_3',['getClient',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client.html#aa881b1c64f8b7f5e7d23f3a7c3498d98',1,'com::example::serrano::proyectoandroid::ApiClient']]],
+  ['getcompanyid_4',['getCompanyID',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a61ffb27b0f6d0715a9fc2e712b67aa58',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getibeaconlength_5',['getiBeaconLength',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#afccf78ae128850e6c411b89fc7a1cd5f',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getibeacontype_6',['getiBeaconType',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a7c49f5503f1c51c893c1d7a865f088c7',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getlosbytes_7',['getLosBytes',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a8beee30ba97b3f4bb1b536ef9774f5d0',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getmajor_8',['getMajor',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a29ffd8d51cbff404dcc1d6d17f67f7ac',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getminor_9',['getMinor',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a46534121ba5ed9f7ea0208416d3fe0b2',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getprefijo_10',['getPrefijo',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#aefc0f67e399a22dd8b3f742d7270db38',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['gettimestamp_11',['getTimestamp',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_sensor_data.html#a79f26127929bb7fda72d36a86079aa62',1,'com::example::serrano::proyectoandroid::SensorData']]],
+  ['gettxpower_12',['getTxPower',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#a0bf9555ef21f026842c897a60c77067e',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['gettype_13',['gettype',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_sensor_data.html#a1b34347e8e98b152e630c83edd75df77',1,'com::example::serrano::proyectoandroid::SensorData']]],
+  ['getuuid_14',['getUUID',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_trama_i_beacon.html#ae023857d041815f889b715fbf707a8db',1,'com::example::serrano::proyectoandroid::TramaIBeacon']]],
+  ['getvalue_15',['getvalue',['../classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_sensor_data.html#ab1209dfcf1fc881b1df65f87f9a751d4',1,'com::example::serrano::proyectoandroid::SensorData']]]
+];

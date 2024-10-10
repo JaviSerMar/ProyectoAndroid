@@ -1,0 +1,265 @@
+\doxysection{Referencia de la clase com.\+example.\+serrano.\+proyectoandroid.\+Utilidades}
+\hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades}{}\label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+
+
+Clase que proporciona utilidades para manejar conversiones de datos.  
+
+
+
+
+Diagrama de colaboración de com.\+example.\+serrano.\+proyectoandroid.\+Utilidades\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static byte\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adbc12c9b0638499e35d6a120f8551950}{string\+To\+Bytes}} (String texto)
+\begin{DoxyCompactList}\small\item\em Convierte una cadena en un arreglo de bytes. \end{DoxyCompactList}\item 
+static UUID \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_afc0e15a314d2cd066ac8d315c8bae829}{string\+To\+UUID}} (String uuid)
+\begin{DoxyCompactList}\small\item\em Convierte una cadena de UUID en un objeto UUID. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a6114caa7e122a677f7eed2b104c7c667}{uuid\+To\+String}} (UUID uuid)
+\begin{DoxyCompactList}\small\item\em Convierte un objeto UUID en una cadena. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adf442c777924aa3dd7be7f52af7f34ae}{uuid\+To\+Hex\+String}} (UUID uuid)
+\begin{DoxyCompactList}\small\item\em Convierte un objeto UUID en una cadena hexadecimal. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a1be511575cc4eb5850736ba919152da0}{bytes\+To\+String}} (byte\mbox{[}$\,$\mbox{]} bytes)
+\begin{DoxyCompactList}\small\item\em Convierte un arreglo de bytes en una cadena. \end{DoxyCompactList}\item 
+static byte\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_aa2789a127df0f56dcc615d714f5e4c9b}{dos\+Long\+To\+Bytes}} (long mas\+Significativos, long menos\+Significativos)
+\begin{DoxyCompactList}\small\item\em Convierte dos longitudes en un arreglo de bytes. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a043601cc9dfc1ae83a25c664fa89678e}{bytes\+To\+Int}} (byte\mbox{[}$\,$\mbox{]} bytes)
+\begin{DoxyCompactList}\small\item\em Convierte un arreglo de bytes en un entero. \end{DoxyCompactList}\item 
+static long \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a7ecfc922c3712ef97e3c26e68773bf77}{bytes\+To\+Long}} (byte\mbox{[}$\,$\mbox{]} bytes)
+\begin{DoxyCompactList}\small\item\em Convierte un arreglo de bytes en un long. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a0b315a1350a9c3c0a316604279e88239}{bytes\+To\+Int\+OK}} (byte\mbox{[}$\,$\mbox{]} bytes)
+\begin{DoxyCompactList}\small\item\em Convierte un arreglo de bytes en un entero, manejando errores. \end{DoxyCompactList}\item 
+static String \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a76350fdaf368a7460fe88e32c9ac78ff}{bytes\+To\+Hex\+String}} (byte\mbox{[}$\,$\mbox{]} bytes)
+\begin{DoxyCompactList}\small\item\em Convierte un arreglo de bytes en una cadena hexadecimal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Clase que proporciona utilidades para manejar conversiones de datos. 
+
+Esta clase incluye métodos para convertir cadenas a bytes, UUID a cadenas, y realizar conversiones entre diferentes representaciones de datos. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a76350fdaf368a7460fe88e32c9ac78ff}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!bytesToHexString@{bytesToHexString}}
+\index{bytesToHexString@{bytesToHexString}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{bytesToHexString()}{bytesToHexString()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a76350fdaf368a7460fe88e32c9ac78ff} 
+static String com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+bytes\+To\+Hex\+String (\begin{DoxyParamCaption}\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un arreglo de bytes en una cadena hexadecimal. 
+
+Este método convierte un arreglo de bytes en una representación de cadena hexadecimal.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em bytes} & El arreglo de bytes que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Una cadena hexadecimal que representa el arreglo de bytes, o una cadena vacía si el arreglo es nulo. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a043601cc9dfc1ae83a25c664fa89678e}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!bytesToInt@{bytesToInt}}
+\index{bytesToInt@{bytesToInt}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{bytesToInt()}{bytesToInt()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a043601cc9dfc1ae83a25c664fa89678e} 
+static int com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+bytes\+To\+Int (\begin{DoxyParamCaption}\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un arreglo de bytes en un entero. 
+
+Este método convierte un arreglo de bytes en un valor entero.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em bytes} & El arreglo de bytes que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+El valor entero correspondiente al arreglo de bytes. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a0b315a1350a9c3c0a316604279e88239}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!bytesToIntOK@{bytesToIntOK}}
+\index{bytesToIntOK@{bytesToIntOK}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{bytesToIntOK()}{bytesToIntOK()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a0b315a1350a9c3c0a316604279e88239} 
+static int com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+bytes\+To\+Int\+OK (\begin{DoxyParamCaption}\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un arreglo de bytes en un entero, manejando errores. 
+
+Este método convierte un arreglo de bytes en un valor entero, y maneja posibles errores relacionados con la longitud del arreglo.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em bytes} & El arreglo de bytes que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+El valor entero correspondiente al arreglo de bytes, o 0 si el arreglo es nulo. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Error} & Si el arreglo tiene más de 4 bytes. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a7ecfc922c3712ef97e3c26e68773bf77}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!bytesToLong@{bytesToLong}}
+\index{bytesToLong@{bytesToLong}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{bytesToLong()}{bytesToLong()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a7ecfc922c3712ef97e3c26e68773bf77} 
+static long com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+bytes\+To\+Long (\begin{DoxyParamCaption}\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un arreglo de bytes en un long. 
+
+Este método convierte un arreglo de bytes en un valor long.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em bytes} & El arreglo de bytes que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+El valor long correspondiente al arreglo de bytes. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a1be511575cc4eb5850736ba919152da0}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!bytesToString@{bytesToString}}
+\index{bytesToString@{bytesToString}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{bytesToString()}{bytesToString()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a1be511575cc4eb5850736ba919152da0} 
+static String com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+bytes\+To\+String (\begin{DoxyParamCaption}\item[{byte\mbox{[}$\,$\mbox{]}}]{bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un arreglo de bytes en una cadena. 
+
+Este método convierte un arreglo de bytes en su representación de cadena.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em bytes} & El arreglo de bytes que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Una cadena que representa los bytes, o una cadena vacía si el arreglo es nulo. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_aa2789a127df0f56dcc615d714f5e4c9b}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!dosLongToBytes@{dosLongToBytes}}
+\index{dosLongToBytes@{dosLongToBytes}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{dosLongToBytes()}{dosLongToBytes()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_aa2789a127df0f56dcc615d714f5e4c9b} 
+static byte\mbox{[}$\,$\mbox{]} com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+dos\+Long\+To\+Bytes (\begin{DoxyParamCaption}\item[{long}]{mas\+Significativos}{, }\item[{long}]{menos\+Significativos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte dos longitudes en un arreglo de bytes. 
+
+Este método toma dos longitudes y las convierte en un arreglo de bytes.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em mas\+Significativos} & La parte más significativa del UUID. \\
+\hline
+{\em menos\+Significativos} & La parte menos significativa del UUID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Un arreglo de bytes que representa los dos longitudes. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adbc12c9b0638499e35d6a120f8551950}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!stringToBytes@{stringToBytes}}
+\index{stringToBytes@{stringToBytes}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{stringToBytes()}{stringToBytes()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adbc12c9b0638499e35d6a120f8551950} 
+static byte\mbox{[}$\,$\mbox{]} com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+string\+To\+Bytes (\begin{DoxyParamCaption}\item[{String}]{texto}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte una cadena en un arreglo de bytes. 
+
+Este método convierte el texto proporcionado en un arreglo de bytes utilizando el conjunto de caracteres predeterminado.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em texto} & La cadena de texto que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Un arreglo de bytes que representa la cadena de texto. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_afc0e15a314d2cd066ac8d315c8bae829}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!stringToUUID@{stringToUUID}}
+\index{stringToUUID@{stringToUUID}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{stringToUUID()}{stringToUUID()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_afc0e15a314d2cd066ac8d315c8bae829} 
+static UUID com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+string\+To\+UUID (\begin{DoxyParamCaption}\item[{String}]{uuid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte una cadena de UUID en un objeto UUID. 
+
+Este método convierte una representación de cadena de un UUID en un objeto UUID. Se espera que la cadena tenga una longitud de 16 caracteres.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em uuid} & La cadena que representa el UUID. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Un objeto UUID correspondiente a la cadena proporcionada. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Excepciones}
+{\em Error} & Si la cadena no tiene 16 caracteres. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adf442c777924aa3dd7be7f52af7f34ae}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!uuidToHexString@{uuidToHexString}}
+\index{uuidToHexString@{uuidToHexString}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{uuidToHexString()}{uuidToHexString()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_adf442c777924aa3dd7be7f52af7f34ae} 
+static String com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+uuid\+To\+Hex\+String (\begin{DoxyParamCaption}\item[{UUID}]{uuid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un objeto UUID en una cadena hexadecimal. 
+
+Este método convierte un objeto UUID en una representación de cadena hexadecimal.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em uuid} & El objeto UUID que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Una cadena hexadecimal que representa el UUID. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a6114caa7e122a677f7eed2b104c7c667}\index{com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}!uuidToString@{uuidToString}}
+\index{uuidToString@{uuidToString}!com.example.serrano.proyectoandroid.Utilidades@{com.example.serrano.proyectoandroid.Utilidades}}
+\doxysubsubsection{\texorpdfstring{uuidToString()}{uuidToString()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_utilidades_a6114caa7e122a677f7eed2b104c7c667} 
+static String com.\+example.\+serrano.\+proyectoandroid.\+Utilidades.\+uuid\+To\+String (\begin{DoxyParamCaption}\item[{UUID}]{uuid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Convierte un objeto UUID en una cadena. 
+
+Este método convierte un objeto UUID en una representación de cadena.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em uuid} & El objeto UUID que se desea convertir. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+Una cadena que representa el UUID. 
+\end{DoxyReturn}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+app/src/main/java/com/example/serrano/proyectoandroid/\mbox{\hyperlink{_utilidades_8java}{Utilidades.\+java}}\end{DoxyCompactItemize}

@@ -1,0 +1,52 @@
+\doxysection{Referencia de la clase com.\+example.\+serrano.\+proyectoandroid.\+Api\+Client}
+\hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client}{}\label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client}\index{com.example.serrano.proyectoandroid.ApiClient@{com.example.serrano.proyectoandroid.ApiClient}}
+
+
+Diagrama de colaboración de com.\+example.\+serrano.\+proyectoandroid.\+Api\+Client\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static Retrofit \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_aa881b1c64f8b7f5e7d23f3a7c3498d98}{get\+Client}} ()
+\item 
+static \mbox{\hyperlink{interfacecom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_service}{Api\+Service}} \mbox{\hyperlink{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_a713e683c69c1a3af68f36be72175d5c2}{get\+Api\+Service}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Clase que gestiona la creación y configuración del cliente Retrofit para realizar solicitudes a un servidor API. 
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_a713e683c69c1a3af68f36be72175d5c2}\index{com.example.serrano.proyectoandroid.ApiClient@{com.example.serrano.proyectoandroid.ApiClient}!getApiService@{getApiService}}
+\index{getApiService@{getApiService}!com.example.serrano.proyectoandroid.ApiClient@{com.example.serrano.proyectoandroid.ApiClient}}
+\doxysubsubsection{\texorpdfstring{getApiService()}{getApiService()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_a713e683c69c1a3af68f36be72175d5c2} 
+static \mbox{\hyperlink{interfacecom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_service}{Api\+Service}} com.\+example.\+serrano.\+proyectoandroid.\+Api\+Client.\+get\+Api\+Service (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Obtiene una instancia del servicio de la API.
+
+\begin{DoxyReturn}{Devuelve}
+Instancia de la interfaz \doxylink{interfacecom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_service}{Api\+Service} para realizar llamadas a la API. 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_aa881b1c64f8b7f5e7d23f3a7c3498d98}\index{com.example.serrano.proyectoandroid.ApiClient@{com.example.serrano.proyectoandroid.ApiClient}!getClient@{getClient}}
+\index{getClient@{getClient}!com.example.serrano.proyectoandroid.ApiClient@{com.example.serrano.proyectoandroid.ApiClient}}
+\doxysubsubsection{\texorpdfstring{getClient()}{getClient()}}
+{\footnotesize\ttfamily \label{classcom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_client_aa881b1c64f8b7f5e7d23f3a7c3498d98} 
+static Retrofit com.\+example.\+serrano.\+proyectoandroid.\+Api\+Client.\+get\+Client (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Obtiene la instancia del cliente Retrofit. Si aún no ha sido inicializada, se crea una nueva instancia con la configuración adecuada.
+
+\begin{DoxyReturn}{Devuelve}
+Instancia de Retrofit configurada con la URL base y Gson\+Converter\+Factory. 
+\end{DoxyReturn}
+
+
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
+\item 
+app/src/main/java/com/example/serrano/proyectoandroid/\mbox{\hyperlink{_api_client_8java}{Api\+Client.\+java}}\end{DoxyCompactItemize}

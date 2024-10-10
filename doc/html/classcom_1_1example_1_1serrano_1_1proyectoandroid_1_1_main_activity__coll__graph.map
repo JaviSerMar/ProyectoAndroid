@@ -1,0 +1,7 @@
+<map id="com.example.serrano.proyectoandroid.MainActivity" name="com.example.serrano.proyectoandroid.MainActivity">
+<area shape="rect" id="Node000001" title=" " alt="" coords="43,155,299,379"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,13,131,83"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,95,120,154,116,156,88,98"/>
+<area shape="rect" id="Node000003" href="$interfacecom_1_1example_1_1serrano_1_1proyectoandroid_1_1_api_service.html" title=" " alt="" coords="155,5,392,91"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,92,233,140,228,138,251,89"/>
+</map>
