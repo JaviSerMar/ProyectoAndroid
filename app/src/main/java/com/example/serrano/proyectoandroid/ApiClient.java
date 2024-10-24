@@ -15,7 +15,7 @@ public class ApiClient {
      * Reemplaza con la URL de tu servidor.
      * @note La IP actual del servidor es: 192.168.132.131
      */
-    private static final String BASE_URL = "http://192.168.132.131:13000/";
+    private static final String BASE_URL = "http://172.20.10.2:13000/";
 
     /** Instancia de Retrofit. */
     private static Retrofit retrofit = null;
